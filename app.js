@@ -1,3 +1,13 @@
+// Contentful
+var client = contentful.createClient({
+    space: '9w2ayuq37k10',
+    accessToken: '_Qae85fxZECOg3x9afRxgcsAQhq5kfEkeAo5dQvaNL4',
+});
+
+
+
+
+
 // variables
 
 const cartBtn = document.querySelector('.cart-btn');
@@ -21,9 +31,18 @@ let buttonsDOM = [];
 class Products {
     async getProducts() {
         try {
-            let result = await fetch("products.json");
-            let data = await result.json();
-            let products = data.items;
+            let contentful = await client.getEntries({
+                content_type: "comfyHouseProducts"
+            });
+
+
+
+            //Local data from Json File on Filetree
+            // let result = await fetch("products.json");
+            // let data = await result.json();
+
+
+            let products = contentful.items;
             products = products.map(item => {
                 const { title, price } = item.fields;
                 const { id } = item.sys;
